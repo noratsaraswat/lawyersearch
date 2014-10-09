@@ -62,4 +62,31 @@ class SearchVakilController < ApplicationController
         @lawyer_service.save
     end
   end
+  def upload_data_to_database
+    CSV.foreach('Lawyers_City_List.csv', :headers => true) do |row|
+       @lawyer_city = LawyerCity.new
+        @lawyer_city.lawyer_code = row[0]
+        @lawyer_city.lawyer_namestring = row[1]
+        @lawyer_city.location = row[3]
+        @lawyer_city.exp = row[2]
+        puts row[3]
+        @lawyer_city.average_rating = row[4]
+        @lawyer_city.save
+        puts "I am saveed for city"
+
+    end
+    puts "Now i am started for service"
+      CSV.foreach('Lawyer_Service_List.csv', :headers => true) do |row|
+       @lawyer_service = LawyerService.new
+        @lawyer_service.lawyer_code = row[0]
+        @lawyer_service.service_code = row[1]
+        @lawyer_service.service_name = row[2]
+        @lawyer_service.service_charge = row[3]
+        @lawyer_service.save
+        puts "i am saved for service"
+    end
+    if @lawyer_service.save
+      render :js => "alert('you have done ');"
+    end 
+  end
 end

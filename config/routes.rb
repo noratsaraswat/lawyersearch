@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'search_vakil/upload_data'
   post 'search_vakil/upload_city_data'
   post 'search_vakil/upload_service_data'
+  post 'search_vakil/upload_data_to_database'
   resources :lawyer_services
 
   resources :lawyer_cities
